@@ -4,11 +4,48 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/src/assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
   <title>To do list</title>
 </head>
 <body>
-  <h1>To do list</h1>
-  <h2>change</h2>
+  <div class="container">
+    <h1>To do list</h1>
+    <label for="text" class="task-record">
+      <input type="text" name="text" id="text">
+      <button class="btn btn-add">add</button>
+    </label>
+
+      <ul class="task-list">
+        <li class="task-list__item">
+          <label for="check0">
+            <input type="checkbox" name="checkbox" id="check0">
+            <span>Drink coffee</span>
+          </label>
+          <button class="btn btn-delete">delete</button>
+        </li>
+        <li class="task-list__item">
+          <label for="check1">
+            <input type="checkbox" name="checkbox" id="check1">
+            <span>Drink coffee</span>
+          </label>
+          <button class="btn btn-delete">delete</button>
+        </li>
+        <li class="task-list__item">
+          <label for="check2">
+            <input type="checkbox" name="checkbox" id="check2">
+            <span>Drink coffee</span>
+          </label>
+          <button class="btn btn-delete">delete</button>
+        </li>
+        <li class="task-list__item">
+          <label for="check3">
+            <input type="checkbox" name="checkbox" id="check3">
+            <span>Drink coffee</span>
+          </label>
+          <button class="btn btn-delete">delete</button>
+        </li>
+      </ul>
+  </div>
+  
 </body>
-</html>
+</html> 
