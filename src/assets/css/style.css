@@ -8,7 +8,7 @@
 
 body {
   font-size: 16px;
-  color: #f7f4f4;
+  color: #f8f3f3;
   background-color: #1a1813;
 }
 
@@ -57,7 +57,6 @@ h1 {
 .task-list {
   width: 80%;
   margin-top: 4%;
-  list-style: none;
 }
 
 .task-list__item {
@@ -73,16 +72,6 @@ h1 {
 .task-list__item:nth-child(odd) {
   background-color: #f8f3f3;
   color: #1a1813;
-}
-
-.task-list__item:nth-child(odd):hover {
-  -webkit-box-shadow: 0 0 3px #fff;
-          box-shadow: 0 0 3px #fff;
-}
-
-.task-list__item:nth-child(even):hover {
-  -webkit-box-shadow: 0 0 5px #1a1813;
-          box-shadow: 0 0 5px #1a1813;
 }
 
 .task-list__item label {
@@ -135,12 +124,12 @@ h1 {
   background-color: #E04250;
 }
 
-input[type=checkbox] {
+.checkbox {
   background-image: url(../img/empty-checkbox.png);
   background-size: cover;
 }
 
-input[type=checkbox] {
+.checkbox {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -155,18 +144,71 @@ input[type=checkbox] {
   transition: background 0.3s ease;
 }
 
-input[type=checkbox]:checked {
+.checkbox:checked {
   background-image: url(../img/check2.webp);
   -webkit-box-shadow: none;
           box-shadow: none;
   outline: none;
 }
 
-input[type=checkbox]:active {
+.checkbox:checked + span {
+  text-decoration: line-through;
+}
+
+.checkbox:active {
   outline: none;
 }
 
-input[type=checkbox]:focus {
+.checkbox:focus {
+  outline: 2px solid #215e76;
   outline-offset: -1px;
+}
+
+.checkbox:hover {
+  -webkit-filter: brightness(110%);
+          filter: brightness(110%);
+}
+
+.checked,
+.checked:nth-child(odd),
+.checked:not(:last-child) {
+  background-color: #807f7f52;
+  color: #00000059;
+  border-top: 1px solid #807f7f52;
+  -webkit-filter: brightness(60%);
+          filter: brightness(60%);
+}
+
+.checked:hover,
+.checked:nth-child(odd):hover,
+.checked:not(:last-child):hover {
+  -webkit-box-shadow: 0 0 3px #807f7f52;
+          box-shadow: 0 0 3px #807f7f52;
+  -webkit-filter: none;
+          filter: none;
+}
+
+.checked:hover label > span,
+.checked:nth-child(odd):hover label > span,
+.checked:not(:last-child):hover label > span {
+  color: #1a1813;
+}
+
+.checked .btn,
+.checked:nth-child(odd) .btn,
+.checked:not(:last-child) .btn {
+  -webkit-filter: brightness(50%);
+          filter: brightness(50%);
+}
+
+.checked .btn:hover, .checked .btn:focus, .checked .btn:active,
+.checked:nth-child(odd) .btn:hover,
+.checked:nth-child(odd) .btn:focus,
+.checked:nth-child(odd) .btn:active,
+.checked:not(:last-child) .btn:hover,
+.checked:not(:last-child) .btn:focus,
+.checked:not(:last-child) .btn:active {
+  -webkit-filter: brightness(90%);
+          filter: brightness(90%);
 }
 /*# sourceMappingURL=style.css.map */

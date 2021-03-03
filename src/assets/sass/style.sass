@@ -1,12 +1,12 @@
 // import theme from 'theme.sass'
-$dark-background: #1a1813
-$light-background: #f8f3f3
-$light-text-color: #f7f4f4
-$dark-text-color: #1a1813
+$dark-theme: #1a1813
+$light-theme: #f8f3f3
 $btn-text: #faf4f4
 $btn-add: #20B364
 $btn-delete: #E04250
 $active-input: #215e76
+$checked-background: #807f7f52
+$checked-color: #00000059
 
 
 *
@@ -17,8 +17,8 @@ $active-input: #215e76
 
 body
   font-size: 16px
-  color: $light-text-color
-  background-color: $dark-background
+  color: $light-theme
+  background-color: $dark-theme
 
 .container
   width: 70%
@@ -27,7 +27,6 @@ body
   display: flex
   flex-direction: column
   align-items: center
-
   padding: 4% 1%
   
 h1
@@ -35,6 +34,7 @@ h1
   font-weight: 500
   text-transform: uppercase
   text-align: center
+
 
 .task
   &-record
@@ -53,18 +53,16 @@ h1
   &-list
     width: 80%
     margin-top: 4% 
-    list-style: none
     &__item
       display: flex
       justify-content: space-between
       padding: 2% 1%
+      // &:hover
+      //   &:not(:last-child)       
+      //     filter: contrast(90%)  
       &:nth-child(odd)      
-        background-color: $light-background
-        color: $dark-text-color
-        &:hover
-          box-shadow: 0 0 3px #fff
-      &:nth-child(even):hover
-        box-shadow: 0 0 5px $dark-background
+        background-color: $light-theme
+        color: $dark-theme
       & label
         width: 80%
         font-size: 1.2em
@@ -73,6 +71,7 @@ h1
         &:hover
           cursor: pointer
           color: $active-input
+
         
 
 
@@ -97,15 +96,14 @@ h1
     margin-left: 1%
     background-color: $btn-add
     box-shadow: 0 0 3px #5f5d5d
-
   &-delete
     background-color: $btn-delete
 
-input[type=checkbox] 
+.checkbox 
   background-image: url(../img/empty-checkbox.png)
   background-size: cover
 
-input[type=checkbox] 
+.checkbox 
 	appearance: none 
 	cursor: pointer 
 	display: inline-block 
@@ -115,17 +113,34 @@ input[type=checkbox]
 	vertical-align: top 
 	outline: none 
 	transition: background 0.3s ease 
-
-input[type=checkbox]:checked  
+.checkbox:checked  
   background-image: url(../img/check2.webp) 
   box-shadow: none
   outline: none
-input[type=checkbox]:active  
+  & + span 
+    text-decoration: line-through
+.checkbox:active  
   outline: none   
-input[type=checkbox]:focus  
-  // outline: 2px solid $active-input
+.checkbox:focus  
+  outline: 2px solid $active-input
   outline-offset: -1px
-// input[type=checkbox]:hover  
+.checkbox:hover  
     filter: brightness(110%)  
      
- 
+
+.checked, 
+.checked:nth-child(odd),
+.checked:not(:last-child)
+  background-color: $checked-background
+  color: $checked-color
+  border-top: 1px solid $checked-background
+  filter: brightness(60%)
+  &:hover
+    box-shadow: 0 0 3px $checked-background
+    filter: none
+    & label > span
+      color: $dark-theme
+  .btn
+    filter: brightness(50%)
+    &:hover, &:focus, &:active
+      filter: brightness(90%)
