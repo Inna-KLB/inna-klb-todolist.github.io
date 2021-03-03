@@ -1,0 +1,27 @@
+.checkbox 
+  background-image: url(../img/empty-checkbox.png)
+  background-size: cover
+
+.checkbox 
+	appearance: none 
+	cursor: pointer 
+	display: inline-block 
+	width: 22px 
+	height: 22px 
+	margin-right: 5px
+	vertical-align: top 
+	outline: none 
+	transition: background 0.3s ease 
+.checkbox:checked  
+  background-image: url(../img/check2.webp) 
+  box-shadow: none
+  outline: none
+  & + span 
+    text-decoration: line-through
+.checkbox:active  
+  outline: none   
+.checkbox:focus  
+  outline: 2px solid $active-input
+  outline-offset: -1px
+.checkbox:hover  
+    filter: brightness(110%)  

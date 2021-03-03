@@ -1,13 +1,7 @@
-// import theme from 'theme.sass'
-$dark-theme: #1a1813
-$light-theme: #f8f3f3
-$btn-text: #faf4f4
-$btn-add: #20B364
-$btn-delete: #E04250
-$active-input: #215e76
-$checked-background: #807f7f52
-$checked-color: #00000059
-
+@import './theme.sass'
+@import './components/_btn.sass'
+@import './components/_checkbox.sass'
+@import './components/_tasks-list.sass'
 
 *
   margin: 0
@@ -35,102 +29,8 @@ h1
   text-transform: uppercase
   text-align: center
 
-
-.task
-  &-record
-    margin-top: 4%
-    width: 55%
-    & input
-      min-width: 100px
-      width: 30vw
-      min-height: 35px
-      height: 7vh
-      padding-left: 1%
-      // border: 2px solid $active-input    
-      font-size: 1.3em
-      &:active, &:focus
-        outline: 2px solid $active-input
-  &-list
-    width: 80%
-    margin-top: 4% 
-    &__item
-      display: flex
-      justify-content: space-between
-      padding: 2% 1%
-      // &:hover
-      //   &:not(:last-child)       
-      //     filter: contrast(90%)  
-      &:nth-child(odd)      
-        background-color: $light-theme
-        color: $dark-theme
-      & label
-        width: 80%
-        font-size: 1.2em
-        align-self: center
-        padding: 1%
-        &:hover
-          cursor: pointer
-          color: $active-input
-
-        
-
-
-.btn
-  width: 18%
-  font-size: 0.9em
-  color: $btn-text
-  font-weight: 600
-  text-transform: uppercase
-  padding: 2% 3%  
-  border: 1px solid #dcfacf
-  border-radius: 7px
-  &:focus,&:active, &:hover
-    cursor: pointer
-    border-radius: 20px
-    outline: none
-    filter: drop-shadow(0 0 2px #5f5d5d) 
-    transition: all 0.2s ease-in
-  &:hover
-    border: 1px solid #dcfacf
-  &-add
-    margin-left: 1%
-    background-color: $btn-add
-    box-shadow: 0 0 3px #5f5d5d
-  &-delete
-    background-color: $btn-delete
-
-.checkbox 
-  background-image: url(../img/empty-checkbox.png)
-  background-size: cover
-
-.checkbox 
-	appearance: none 
-	cursor: pointer 
-	display: inline-block 
-	width: 22px 
-	height: 22px 
-	margin-right: 5px
-	vertical-align: top 
-	outline: none 
-	transition: background 0.3s ease 
-.checkbox:checked  
-  background-image: url(../img/check2.webp) 
-  box-shadow: none
-  outline: none
-  & + span 
-    text-decoration: line-through
-.checkbox:active  
-  outline: none   
-.checkbox:focus  
-  outline: 2px solid $active-input
-  outline-offset: -1px
-.checkbox:hover  
-    filter: brightness(110%)  
-     
-
 .checked, 
-.checked:nth-child(odd),
-.checked:not(:last-child)
+.checked:nth-child(odd)
   background-color: $checked-background
   color: $checked-color
   border-top: 1px solid $checked-background
