@@ -25,6 +25,7 @@ let path = {
 
 let { src, dest } = require('gulp'),
     gulp = require('gulp'),
+    webpack = require("webpack-stream"),
     browsersync = require('browser-sync').create(),
     del = require('del'),
     sass = require('gulp-sass'),
@@ -71,10 +72,65 @@ function css() {
     .pipe(browsersync.stream())
 }
 
+
 function js() {
   return src(path.src.js)
+  .pipe(webpack({
+    mode: 'development',
+    output: {
+      filename: 'script.js'
+    },
+    watch: false,
+    devtool: "source-map",
+    module: {
+      rules: [
+        {
+          test: /\.m?js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [['@babel/preset-env', {
+                debug: true,
+                corejs: 3,
+                useBuiltIns: "usage"
+              }]]
+            }
+          }
+        }
+      ]
+    }
+  }))
     .pipe(dest(path.build.js))
     .pipe(browsersync.stream())
+}
+
+function prodJs() {
+  return src(path.src.js)
+  .pipe(webpack({
+    mode: 'production',
+    output: {
+      filename: 'script.js'
+    },
+    module: {
+      rules: [
+        {
+          test: /\.m?js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [['@babel/preset-env', {
+                useBuiltIns: "usage",
+                corejs: 3
+              }]]
+            }
+          }
+        }
+      ]
+    }
+  }))
+    .pipe(dest(path.build.js))
 }
 
 function img() {
@@ -98,6 +154,7 @@ let build = gulp.series(clean, gulp.parallel(html, css, js, img));
 let watch = gulp.parallel(build, watchFiles, browserSync);
 
 exports.img = img;
+// exports.prodJs = prodJs;
 exports.js = js;
 exports.css = css;
 exports.html = html;
