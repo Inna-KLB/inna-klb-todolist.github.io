@@ -5,19 +5,13 @@ import addTaskList from './modules/addTaskList';
 
 window.addEventListener('DOMContentLoaded', () => {
   'use strict';
-  const addItem = document.querySelector('.btn-add'),
-  inputValue = document.querySelector('#text'),
-  taskList = document.createElement('ul'),
-  container = document.querySelector('.container');
-
   let taskArray = [];
+  let isChecked = false;
 
-  taskList.classList.add('task-list');
-  container.append(taskList);
 
-  addTaskList();
-  checkInputValue();
-  checkTask();
-  deleteTask(); 
+  addTaskList('.btn-add', '#text', 'ul', taskArray, isChecked);
+  checkInputValue('.btn-add', '#text');
+  checkTask('ul', taskArray, isChecked);
+  deleteTask('ul', taskArray); 
 });
 
