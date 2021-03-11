@@ -1,0 +1,35 @@
+@media screen and (max-width: 765px)
+  body
+    font-size: 12px
+  .container
+    width: 90%
+  .task
+    &-record
+      width: 80%
+      & input
+        width: 55vw
+        max-height: 30px
+        min-height: 5vh
+        &:active, &:focus
+          outline: 1px solid $active-input
+    &-list
+      width: 100%
+  .btn
+    &-delete
+      padding: 2% 2%
+  .checkbox 
+    width: 17px 
+    height: 17px
+
+@media screen and (min-width: 766px) and (max-width: 1024px)
+  body
+    font-size: 14px
+  .task
+    &-record
+      width: 80%
+      & input
+        width: 43vw
+        max-height: 30px
+        height: 5vh
+    &-list
+      width: 100%
