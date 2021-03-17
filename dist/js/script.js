@@ -5146,6 +5146,51 @@ var checkInputValue = function checkInputValue(btn, input) {
 
 /***/ }),
 
+/***/ "./src/assets/js/modules/checkTask.js":
+/*!********************************************!*\
+  !*** ./src/assets/js/modules/checkTask.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.string.replace.js */ "./node_modules/core-js/modules/es.string.replace.js");
+/* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.regexp.exec.js */ "./node_modules/core-js/modules/es.regexp.exec.js");
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _services_patchData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/patchData */ "./src/assets/js/services/patchData.js");
+
+
+
+
+var checkTask = function checkTask(link) {
+  var taskList = document.querySelector('.task-list');
+  taskList.addEventListener('click', function (e) {
+    var parent = e.target.parentElement.parentElement;
+
+    if (e.target && e.target.matches('input.checkbox')) {
+      var id = e.target.getAttribute('id'),
+          status = e.target.getAttribute('data-checked'),
+          linkToCheck = link.replace('.json', "/".concat(id, ".json"));
+
+      if (parent.classList.contains('checked')) {
+        parent.classList.remove('checked');
+        Object(_services_patchData__WEBPACK_IMPORTED_MODULE_2__["default"])(linkToCheck, false);
+        console.log(status);
+      } else {
+        parent.classList.add('checked');
+        Object(_services_patchData__WEBPACK_IMPORTED_MODULE_2__["default"])(linkToCheck, true);
+        console.log(status);
+      }
+    }
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (checkTask);
+
+/***/ }),
+
 /***/ "./src/assets/js/modules/createTasksList.js":
 /*!**************************************************!*\
   !*** ./src/assets/js/modules/createTasksList.js ***!
@@ -5233,7 +5278,15 @@ var createTasksList = /*#__PURE__*/function () {
                     status = _ref2.status;
                 var task = document.createElement('li');
                 task.classList.add('task-list__item');
+                task.setAttribute('draggable', 'true');
                 task.innerHTML = "\n        <label for=\"".concat(id, "\">\n        <input type=\"checkbox\" data-checked=\"").concat(status, "\" name=\"checkbox\" id=\"").concat(id, "\" class=\"checkbox\">\n        <span>").concat(value, "</span>\n        </label>\n        <button data-delete=\"").concat(id, "\" class=\"btn btn-delete\">delete</button>");
+
+                if (status === true) {
+                  task.classList.add('checked');
+                } else {
+                  task.classList.remove('checked');
+                }
+
                 taskList.append(task);
               });
             })["catch"](function (error) {
@@ -5302,19 +5355,22 @@ var taskCalls = function taskCalls(btn, link, input) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _modules_createTasksList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/createTasksList */ "./src/assets/js/modules/createTasksList.js");
-/* harmony import */ var _modules_taskCalls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/taskCalls */ "./src/assets/js/modules/taskCalls.js");
-/* harmony import */ var _services_deleteData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/deleteData */ "./src/assets/js/services/deleteData.js");
+/* harmony import */ var _modules_checkTask__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/checkTask */ "./src/assets/js/modules/checkTask.js");
+/* harmony import */ var _modules_createTasksList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/createTasksList */ "./src/assets/js/modules/createTasksList.js");
+/* harmony import */ var _modules_taskCalls__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/taskCalls */ "./src/assets/js/modules/taskCalls.js");
+/* harmony import */ var _services_deleteData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/deleteData */ "./src/assets/js/services/deleteData.js");
+
 
 
 
 var link = 'https://to-do-list-573d3-default-rtdb.firebaseio.com/data.json';
-Object(_modules_createTasksList__WEBPACK_IMPORTED_MODULE_0__["default"])(link);
+Object(_modules_createTasksList__WEBPACK_IMPORTED_MODULE_1__["default"])(link);
 window.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
-  Object(_modules_taskCalls__WEBPACK_IMPORTED_MODULE_1__["default"])('.btn-add', link, '#text');
-  Object(_services_deleteData__WEBPACK_IMPORTED_MODULE_2__["default"])(link);
+  Object(_modules_taskCalls__WEBPACK_IMPORTED_MODULE_2__["default"])('.btn-add', link, '#text');
+  Object(_services_deleteData__WEBPACK_IMPORTED_MODULE_3__["default"])(link);
+  Object(_modules_checkTask__WEBPACK_IMPORTED_MODULE_0__["default"])(link);
 });
 
 /***/ }),
@@ -5421,6 +5477,69 @@ function _getData() {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (getData);
+
+/***/ }),
+
+/***/ "./src/assets/js/services/patchData.js":
+/*!*********************************************!*\
+  !*** ./src/assets/js/services/patchData.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.promise.js */ "./node_modules/core-js/modules/es.promise.js");
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.object.to-string.js */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function patchData(_x, _x2) {
+  return _patchData.apply(this, arguments);
+}
+
+function _patchData() {
+  _patchData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(link, status) {
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return fetch(link, {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json' // 'Access-Control-Allow-Origin': 'http://localhost:3000/',
+                // "Access-Control-Allow-Headers": "Content-Type",
+                // 'Access-Control-Allow-Methods': 'PATCH, OPTIONS',
+                // 'Access-Control-Allow-Credentials': true
+
+              },
+              body: JSON.stringify({
+                'status': status
+              })
+            });
+
+          case 2:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _patchData.apply(this, arguments);
+}
+
+;
+/* harmony default export */ __webpack_exports__["default"] = (patchData);
 
 /***/ }),
 

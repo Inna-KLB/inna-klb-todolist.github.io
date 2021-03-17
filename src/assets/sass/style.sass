@@ -46,7 +46,13 @@ body
     filter: brightness(50%)
     &:hover, &:focus, &:active
       filter: brightness(90%)
-
+  .checkbox
+    background-image: url(../img/check2.webp) 
+    box-shadow: none
+    outline: none
+    & + span 
+      text-decoration: line-through
+      
 .disabled,
 .disabled:hover
   filter: brightness(40%)
