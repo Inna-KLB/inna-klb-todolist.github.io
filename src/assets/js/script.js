@@ -1,5 +1,6 @@
 import checkTask from './modules/checkTask';
 import createTasksList from './modules/createTasksList';
+import dragAndDrop from './modules/dragAndDrop';
 import taskCalls from './modules/taskCalls';
 import deleteData from './services/deleteData';
 
@@ -11,5 +12,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   taskCalls('.btn-add', link, '#text');
   deleteData(link);
-  checkTask(link);
+  checkTask(link, '.task-list');
+  dragAndDrop('.task-list');
 });

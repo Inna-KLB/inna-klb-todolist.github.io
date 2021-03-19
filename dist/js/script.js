@@ -4239,6 +4239,45 @@ for (var COLLECTION_NAME in DOMIterables) {
 
 /***/ }),
 
+/***/ "./node_modules/core-js/modules/web.timers.js":
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/modules/web.timers.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+var userAgent = __webpack_require__(/*! ../internals/engine-user-agent */ "./node_modules/core-js/internals/engine-user-agent.js");
+
+var slice = [].slice;
+var MSIE = /MSIE .\./.test(userAgent); // <- dirty ie9- check
+
+var wrap = function (scheduler) {
+  return function (handler, timeout /* , ...arguments */) {
+    var boundArgs = arguments.length > 2;
+    var args = boundArgs ? slice.call(arguments, 2) : undefined;
+    return scheduler(boundArgs ? function () {
+      // eslint-disable-next-line no-new-func -- spec requirement
+      (typeof handler == 'function' ? handler : Function(handler)).apply(this, args);
+    } : handler, timeout);
+  };
+};
+
+// ie9- setTimeout & setInterval additional parameters fix
+// https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timers
+$({ global: true, bind: true, forced: MSIE }, {
+  // `setTimeout` method
+  // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-settimeout
+  setTimeout: wrap(global.setTimeout),
+  // `setInterval` method
+  // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-setinterval
+  setInterval: wrap(global.setInterval)
+});
+
+
+/***/ }),
+
 /***/ "./node_modules/regenerator-runtime/runtime.js":
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
@@ -5135,7 +5174,7 @@ var checkInputValue = function checkInputValue(btn, input) {
   btn.setAttribute('disabled', 'disabled');
   btn.classList.add('disabled');
   input.addEventListener('input', function () {
-    if (input['value'] !== '') {
+    if (input['value'] !== 0) {
       btn.removeAttribute('disabled');
       btn.classList.remove('disabled');
     }
@@ -5160,28 +5199,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.regexp.exec.js */ "./node_modules/core-js/modules/es.regexp.exec.js");
 /* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _services_patchData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/patchData */ "./src/assets/js/services/patchData.js");
+/* harmony import */ var _taskToDown__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./taskToDown */ "./src/assets/js/modules/taskToDown.js");
+/* harmony import */ var _taskToUp__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./taskToUp */ "./src/assets/js/modules/taskToUp.js");
 
 
 
 
-var checkTask = function checkTask(link) {
-  var taskList = document.querySelector('.task-list');
+
+
+var checkTask = function checkTask(link, selector) {
+  var taskList = document.querySelector(selector);
   taskList.addEventListener('click', function (e) {
     var parent = e.target.parentElement.parentElement;
 
     if (e.target && e.target.matches('input.checkbox')) {
       var id = e.target.getAttribute('id'),
-          status = e.target.getAttribute('data-checked'),
           linkToCheck = link.replace('.json', "/".concat(id, ".json"));
 
       if (parent.classList.contains('checked')) {
         parent.classList.remove('checked');
         Object(_services_patchData__WEBPACK_IMPORTED_MODULE_2__["default"])(linkToCheck, false);
-        console.log(status);
+        Object(_taskToUp__WEBPACK_IMPORTED_MODULE_4__["default"])(parent);
       } else {
         parent.classList.add('checked');
         Object(_services_patchData__WEBPACK_IMPORTED_MODULE_2__["default"])(linkToCheck, true);
-        console.log(status);
+        Object(_taskToDown__WEBPACK_IMPORTED_MODULE_3__["default"])(parent);
       }
     }
   });
@@ -5283,11 +5325,11 @@ var createTasksList = /*#__PURE__*/function () {
 
                 if (status === true) {
                   task.classList.add('checked');
+                  taskList.append(task);
                 } else {
                   task.classList.remove('checked');
+                  taskList.prepend(task);
                 }
-
-                taskList.append(task);
               });
             })["catch"](function (error) {
               return console.log(error);
@@ -5310,6 +5352,45 @@ var createTasksList = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (createTasksList);
+
+/***/ }),
+
+/***/ "./src/assets/js/modules/dragAndDrop.js":
+/*!**********************************************!*\
+  !*** ./src/assets/js/modules/dragAndDrop.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var dragAndDrop = function dragAndDrop(dragArea) {
+  var taskArea = document.querySelector(dragArea);
+  taskArea.addEventListener('dragover', function (e) {
+    e.preventDefault();
+    var activeTask = taskArea.querySelector('.selected'),
+        currentTask = e.target,
+        nextTask = currentTask === activeTask.nextElementSibling ? currentTask.nextElementSibling : currentTask;
+
+    if (!(activeTask != currentTask && currentTask.classList.contains('task-list__item'))) {
+      return;
+    }
+
+    taskArea.insertBefore(activeTask, nextTask);
+  });
+  taskArea.addEventListener('dragstart', function (e) {
+    if (e.target && e.target.matches('li.task-list__item')) {
+      e.target.classList.add('selected');
+    }
+  });
+  taskArea.addEventListener('dragend', function (e) {
+    if (e.target && e.target.matches('li.task-list__item')) {
+      e.target.classList.remove('selected');
+    }
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (dragAndDrop);
 
 /***/ }),
 
@@ -5346,6 +5427,66 @@ var taskCalls = function taskCalls(btn, link, input) {
 
 /***/ }),
 
+/***/ "./src/assets/js/modules/taskToDown.js":
+/*!*********************************************!*\
+  !*** ./src/assets/js/modules/taskToDown.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_timers_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.timers.js */ "./node_modules/core-js/modules/web.timers.js");
+/* harmony import */ var core_js_modules_web_timers_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_timers_js__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var taskToDown = function taskToDown(task) {
+  var nextTask;
+  var intervalId = setInterval(function () {
+    nextTask = task.nextElementSibling;
+
+    if (nextTask) {
+      !nextTask.classList.contains('checked') ? task.before(nextTask) : clearInterval(intervalId);
+    } else {
+      clearInterval(intervalId);
+    }
+  }, 200);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (taskToDown);
+
+/***/ }),
+
+/***/ "./src/assets/js/modules/taskToUp.js":
+/*!*******************************************!*\
+  !*** ./src/assets/js/modules/taskToUp.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_timers_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.timers.js */ "./node_modules/core-js/modules/web.timers.js");
+/* harmony import */ var core_js_modules_web_timers_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_timers_js__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var taskToUp = function taskToUp(task) {
+  var prevTask;
+  var intervalId = setInterval(function () {
+    prevTask = task.previousElementSibling;
+
+    if (prevTask) {
+      prevTask.classList.contains('checked') ? task.after(prevTask) : clearInterval(intervalId);
+    } else {
+      clearInterval(intervalId);
+    }
+  }, 200);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (taskToUp);
+
+/***/ }),
+
 /***/ "./src/assets/js/script.js":
 /*!*********************************!*\
   !*** ./src/assets/js/script.js ***!
@@ -5357,8 +5498,10 @@ var taskCalls = function taskCalls(btn, link, input) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_checkTask__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/checkTask */ "./src/assets/js/modules/checkTask.js");
 /* harmony import */ var _modules_createTasksList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/createTasksList */ "./src/assets/js/modules/createTasksList.js");
-/* harmony import */ var _modules_taskCalls__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/taskCalls */ "./src/assets/js/modules/taskCalls.js");
-/* harmony import */ var _services_deleteData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/deleteData */ "./src/assets/js/services/deleteData.js");
+/* harmony import */ var _modules_dragAndDrop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/dragAndDrop */ "./src/assets/js/modules/dragAndDrop.js");
+/* harmony import */ var _modules_taskCalls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/taskCalls */ "./src/assets/js/modules/taskCalls.js");
+/* harmony import */ var _services_deleteData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services/deleteData */ "./src/assets/js/services/deleteData.js");
+
 
 
 
@@ -5368,9 +5511,10 @@ Object(_modules_createTasksList__WEBPACK_IMPORTED_MODULE_1__["default"])(link);
 window.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
-  Object(_modules_taskCalls__WEBPACK_IMPORTED_MODULE_2__["default"])('.btn-add', link, '#text');
-  Object(_services_deleteData__WEBPACK_IMPORTED_MODULE_3__["default"])(link);
-  Object(_modules_checkTask__WEBPACK_IMPORTED_MODULE_0__["default"])(link);
+  Object(_modules_taskCalls__WEBPACK_IMPORTED_MODULE_3__["default"])('.btn-add', link, '#text');
+  Object(_services_deleteData__WEBPACK_IMPORTED_MODULE_4__["default"])(link);
+  Object(_modules_checkTask__WEBPACK_IMPORTED_MODULE_0__["default"])(link, '.task-list');
+  Object(_modules_dragAndDrop__WEBPACK_IMPORTED_MODULE_2__["default"])('.task-list');
 });
 
 /***/ }),

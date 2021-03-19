@@ -23,10 +23,11 @@ const createTasksList = async(link) => {
         <button data-delete="${id}" class="btn btn-delete">delete</button>`;
         if (status === true) {
           task.classList.add('checked');
+          taskList.append(task);
         } else {
           task.classList.remove('checked');
+          taskList.prepend(task);
         }
-        taskList.append(task);
       });     
     })
     .catch(error => console.log(error));
