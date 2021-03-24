@@ -1,4 +1,4 @@
-import checkTask from './modules/checkTask';
+import completeTask from './modules/completeTask';
 import createTasksList from './modules/createTasksList';
 import dragAndDrop from './modules/dragAndDrop';
 import taskCalls from './modules/taskCalls';
@@ -13,7 +13,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   taskCalls('.btn-add', link, '#text');
   deleteData(link);
-  checkTask(link, '.task-list');
+  completeTask(link, '.task-list');
   dragAndDrop('.task-list');
-  toggleTheme('.toggle-theme', 'body');
+  toggleTheme('.toggle-theme', 'body', '.icons');
 });

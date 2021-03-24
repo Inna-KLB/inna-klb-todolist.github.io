@@ -20,7 +20,7 @@ const createTasksList = async(link) => {
         <input type="checkbox" data-checked="${status}" name="checkbox" id="${id}" class="checkbox">
         <span>${value}</span>
         </label>
-        <button data-delete="${id}" class="btn btn-delete">delete</button>`;
+        <button data-delete="${id}" class="btn-delete">&#10006;</button>`;
         if (status === true) {
           task.classList.add('checked');
           taskList.append(task);

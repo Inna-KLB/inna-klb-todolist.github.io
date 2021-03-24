@@ -1,9 +1,9 @@
 .toggle-theme
   cursor: pointer
   position: absolute
-  top: 6%
+  top: 4%
   right: 3%
-  padding: 0.5em 0.7em
+  padding: 0.4em 0.6em
   font-size: 0.9em
   background-color: transparent
   color: $active-input
@@ -12,3 +12,17 @@
   &:hover
     background-color: $active-input
     color: $light-theme
+  & .icons
+    display: inline-block
+    font-family: "icons"
+    font-style: normal
+    font-weight: normal
+    speak: never
+    text-decoration: inherit
+    width: 1em
+    margin-right: .2em
+    text-align: center
+  & .icon-sun-filled:before  
+    content: '\e800'
+  & .icon-moon:before 
+    content: '\e801'

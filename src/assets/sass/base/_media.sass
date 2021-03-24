@@ -4,7 +4,7 @@
   .container
     width: 90%
   .task
-    &-record
+    &-input
       width: 80%
       & input
         width: 55vw
@@ -17,18 +17,29 @@
       &__item label span
         width: 88%
   .btn
-    width: 18%
+    &-add
+      width: 18%
     &-delete
-      padding: 2% 2%
+      width: 8%
   .checkbox 
     width: 17px 
     height: 17px
+  
+  .toggle-theme
+    top: 2%
+    padding: 0.4em 0.5em
+    border-radius: 6px
+    & .icons
+      margin-right: 0
+    & span
+      display: none
+
 
 @media screen and (min-width: 766px) and (max-width: 1024px)
   body
     font-size: 14px
   .task
-    &-record
+    &-input
       width: 80%
       & input
         width: 43vw
@@ -38,7 +49,7 @@
       width: 100%
       &__item label span
         width: 88%
-  .btn
+  .btn-add
     width: 16%
 
 @media screen and (min-width: 1023px) and (max-width: 1280px)

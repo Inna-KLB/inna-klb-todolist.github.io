@@ -2,7 +2,7 @@ import patchData from '../services/patchData';
 import taskToDown from './taskToDown';
 import taskToUp from './taskToUp';
 
-const checkTask = (link, selector) => {
+const completeTask = (link, selector) => {
   const taskList = document.querySelector(selector);
  
   taskList.addEventListener('click', (e) => {
@@ -24,4 +24,4 @@ const checkTask = (link, selector) => {
   });
 };
 
-export default checkTask;
+export default completeTask;
