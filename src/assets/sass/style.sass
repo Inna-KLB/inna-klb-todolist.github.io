@@ -1,7 +1,10 @@
 @import './theme.sass'
+@import './_fonts.sass'
 @import './components/_btn.sass'
 @import './components/_checkbox.sass'
 @import './components/_tasks-list.sass'
+@import './components/_toggle-theme.sass'
+
 
 ::-webkit-scrollbar
   width: 0
@@ -11,10 +14,10 @@
   box-sizing: border-box
   font-weight: normal
 
+
 body
   font-size: 16px
-  color: $light-theme
-  background-color: $dark-theme
+
 
 .container
   width: 70%
@@ -33,12 +36,12 @@ body
 
 .checked, 
 .checked:nth-child(odd)
-  background-color: $checked-background
+  background-color: $dark-checked-background
   color: $checked-color
-  border-top: 1px solid $checked-background
+  border-top: 1px solid $dark-checked-background
   filter: brightness(60%)
   &:hover
-    box-shadow: 0 0 3px $checked-background
+    box-shadow: 0 0 3px $dark-checked-background
     filter: none
     & label > span
       color: $dark-theme
@@ -59,6 +62,31 @@ body
 
 .selected
   filter: brightness(50%)
+
+.dark-theme
+  color: $light-theme
+  background-color: $dark-theme
+  .task-list__item:nth-child(odd)      
+    background-color: $light-theme
+    color: $dark-theme
+  .checked, 
+  .checked:nth-child(odd)
+    background-color: $dark-checked-background
+
+.light-theme
+  color: $dark-theme
+  background-color: $light-theme
+  .task-list__item:nth-child(odd)      
+    background-color: $dark-theme
+    color: $light-theme
+  .disabled,
+  .disabled:hover
+    filter: brightness(60%)
+  .checked, 
+  .checked:nth-child(odd)
+    background-color: $light-checked-background
+    color: $checked-color
+
 
 
 @import './_media.sass'

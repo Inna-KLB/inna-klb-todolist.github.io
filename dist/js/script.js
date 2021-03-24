@@ -5487,6 +5487,33 @@ var taskToUp = function taskToUp(task) {
 
 /***/ }),
 
+/***/ "./src/assets/js/modules/toggleTheme.js":
+/*!**********************************************!*\
+  !*** ./src/assets/js/modules/toggleTheme.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var toggleTheme = function toggleTheme(btn, selector) {
+  var toggleCheckbox = document.querySelector(btn),
+      body = document.querySelector(selector);
+  toggleCheckbox.addEventListener('click', function () {
+    if (body.classList.contains('light-theme')) {
+      body.classList.remove('light-theme');
+      body.classList.add('dark-theme');
+    } else {
+      body.classList.remove('dark-theme');
+      body.classList.add('light-theme');
+    }
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (toggleTheme);
+
+/***/ }),
+
 /***/ "./src/assets/js/script.js":
 /*!*********************************!*\
   !*** ./src/assets/js/script.js ***!
@@ -5500,7 +5527,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_createTasksList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/createTasksList */ "./src/assets/js/modules/createTasksList.js");
 /* harmony import */ var _modules_dragAndDrop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/dragAndDrop */ "./src/assets/js/modules/dragAndDrop.js");
 /* harmony import */ var _modules_taskCalls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/taskCalls */ "./src/assets/js/modules/taskCalls.js");
-/* harmony import */ var _services_deleteData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services/deleteData */ "./src/assets/js/services/deleteData.js");
+/* harmony import */ var _modules_toggleTheme__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/toggleTheme */ "./src/assets/js/modules/toggleTheme.js");
+/* harmony import */ var _services_deleteData__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./services/deleteData */ "./src/assets/js/services/deleteData.js");
+
 
 
 
@@ -5512,9 +5541,10 @@ window.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
   Object(_modules_taskCalls__WEBPACK_IMPORTED_MODULE_3__["default"])('.btn-add', link, '#text');
-  Object(_services_deleteData__WEBPACK_IMPORTED_MODULE_4__["default"])(link);
+  Object(_services_deleteData__WEBPACK_IMPORTED_MODULE_5__["default"])(link);
   Object(_modules_checkTask__WEBPACK_IMPORTED_MODULE_0__["default"])(link, '.task-list');
   Object(_modules_dragAndDrop__WEBPACK_IMPORTED_MODULE_2__["default"])('.task-list');
+  Object(_modules_toggleTheme__WEBPACK_IMPORTED_MODULE_4__["default"])('.toggle-theme', 'body');
 });
 
 /***/ }),
