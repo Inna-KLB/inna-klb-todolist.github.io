@@ -12,4 +12,4 @@
 - Адаптивный дизайн;
 - Работа с Gulp и Webpack.
 
-## [Посмотреть сайт] [/dist]
+## [Посмотреть сайт](https://inna-klb.github.io/to-do-list/dist/)
